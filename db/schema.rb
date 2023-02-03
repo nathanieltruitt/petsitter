@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_03_232800) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_03_234734) do
   create_table "owner_pets", force: :cascade do |t|
     t.integer "owner_id"
     t.integer "pet_id"
@@ -52,8 +52,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_232800) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.date "scheduled_date"
+    t.integer "pet_id"
+    t.integer "petsitter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_schedules_on_pet_id"
+    t.index ["petsitter_id"], name: "index_schedules_on_petsitter_id"
+  end
+
   add_foreign_key "owner_pets", "owners"
   add_foreign_key "owner_pets", "pets"
   add_foreign_key "petsitter_pets", "pets"
   add_foreign_key "petsitter_pets", "petsitters"
+  add_foreign_key "schedules", "pets"
+  add_foreign_key "schedules", "petsitters"
 end
